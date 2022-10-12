@@ -30,13 +30,19 @@ const SignUp = () => {
     /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i
   );
 
-  const [errors, setErrors] = useState({
-    userNameError: "",
-    emailError: "",
-    passwordError: "",
+  const [userNameErrors, setUserNameErrors] = useState({
     userNameValid: false,
+    userNameError: "",
+  });
+
+  const [emailErrors, setEmailErrors] = useState({
     emailValid: false,
+    emailError: "",
+  });
+
+  const [passwordErrors, setPasswordErrors] = useState({
     passwordValid: false,
+    passwordError: "",
   });
 
   const handleChange = (event, property) => {
@@ -44,18 +50,17 @@ const SignUp = () => {
 
     if (name === "userName") {
       if (value.length === 0) {
-        setErrors({
+        setUserNameErrors({
           userNameValid: true,
           userNameError: "user name is required",
         });
-      } 
-      else if ( (value.length < 4 || value.length > 10)) {
-        setErrors({
+      } else if (value.length < 4 || value.length > 10) {
+        setUserNameErrors({
           userNameValid: true,
           userNameError: "min 4 and max 20 characters are allowed",
         });
       } else {
-        setErrors({
+        setUserNameErrors({
           userNameValid: false,
           userNameError: "",
         });
@@ -63,18 +68,17 @@ const SignUp = () => {
     }
     if (name === "email") {
       if (value.length === 0) {
-        setErrors({
+        setEmailErrors({
           emailValid: true,
           emailError: "Email is required",
         });
-      } 
-      else if (!regex.test(value)) {
-        setErrors({
+      } else if (!regex.test(value)) {
+        setEmailErrors({
           emailValid: true,
           emailError: "Enter valid Email address",
         });
       } else {
-        setErrors({
+        setEmailErrors({
           emailValid: false,
           emailError: "",
         });
@@ -82,18 +86,17 @@ const SignUp = () => {
     }
     if (name === "password") {
       if (value.length === 0) {
-        setErrors({
+        setPasswordErrors({
           passwordValid: true,
           passwordError: "Password is required",
         });
-      } 
-      else if (value.length < 4 || value.length > 10) {
-        setErrors({
+      } else if (value.length < 4 || value.length > 10) {
+        setPasswordErrors({
           passwordValid: true,
           passwordError: "min 4 and max 20 characters are allowed",
         });
       } else {
-        setErrors({
+        setPasswordErrors({
           passwordValid: false,
           passwordError: "",
         });
@@ -103,38 +106,20 @@ const SignUp = () => {
     setUser({ ...user, [property]: event.target.value });
   };
 
-  // useEffect( ()=>{
-  //    console.log("errorrrrrrrrrrr");
-  // },[])
-
-  // const validateForm = (errors) => {
-  //   let valid = true;
-  //   Object.values(errors).forEach((val) => val.length > 0 && (valid = false));
-  //   return valid;
-  // };
-
   const submitForm = (event) => {
     event.preventDefault();
 
     //data validate
 
-    // if (validateForm(errors)) {
-    //   console.info("Valid Form");
-    // } else {
-    //   console.error("Invalid Form");
-    // }
-
-    // if(errors.userNameValid || errors.emailValid || errors.passwordValid){
-    //   console.log(errors);
-    //   toast.error("something wrong")
-    // }
-    if (errors || 
+    if (
+      userNameErrors.userNameValid ||
+      emailErrors.emailValid ||
+      passwordErrors.passwordValid ||
       user.user_name === "" ||
       user.user_email === "" ||
       user.user_password === ""
     ) {
-      console.log(errors);
-      toast.error("Please Enter Valid Details");
+      toast.error("please ENter Valid Details");
       return;
     }
 
@@ -151,15 +136,9 @@ const SignUp = () => {
         });
       })
       .catch((error) => {
-        console.log(error);
-        // console.log(error.response.data.user_name);
-        // console.log(error.response.data.user_email);
-        // console.log(error.response.data.user_password);
-        // toast.error(error.response.data.user_name);
-        // toast.error(error.response.data.user_email);
-        // toast.error(error.response.data.user_password);
-        // toast.error(error.response.data.message);
-        //handling error
+        // console.log(error);
+
+        toast.error(error.response.data.message);
       });
   };
   return (
@@ -199,12 +178,11 @@ const SignUp = () => {
                     label="User Name"
                     type="text"
                     autoFocus
-                    onFocus={(e) => handleChange(e, "user_name")}
                     onChange={(e) => handleChange(e, "user_name")}
                     value={user.user_name}
-                    {...(errors.userNameValid && {
-                      error: errors.userNameValid,
-                      helperText: errors.userNameError,
+                    {...(userNameErrors.userNameValid && {
+                      error: userNameErrors.userNameValid,
+                      helperText: userNameErrors.userNameError,
                     })}
                   />
                 </Grid>
@@ -220,9 +198,9 @@ const SignUp = () => {
                     autoComplete="email"
                     onChange={(e) => handleChange(e, "user_email")}
                     value={user.user_email}
-                    {...(errors.emailValid && {
-                      error: errors.emailValid,
-                      helperText: errors.emailError,
+                    {...(emailErrors.emailValid && {
+                      error: emailErrors.emailValid,
+                      helperText: emailErrors.emailError,
                     })}
                   />
                 </Grid>
@@ -237,9 +215,9 @@ const SignUp = () => {
                     autoComplete="new-password"
                     onChange={(e) => handleChange(e, "user_password")}
                     value={user.user_password}
-                    {...(errors.passwordValid && {
-                      error: errors.passwordValid,
-                      helperText: errors.passwordError,
+                    {...(passwordErrors.passwordValid && {
+                      error: passwordErrors.passwordValid,
+                      helperText: passwordErrors.passwordError,
                     })}
                   />
                 </Grid>

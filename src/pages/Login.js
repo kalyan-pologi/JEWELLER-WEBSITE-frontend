@@ -19,14 +19,6 @@ import { LoginUser } from "../services/userService";
 import { Container } from "@mui/material";
 
 const Login = () => {
-  // const handleSubmit = (event) => {
-  //   event.preventDefault();
-  //   const data = new FormData(event.currentTarget);
-  //   console.log({
-  //     email: data.get("email"),
-  //     password: data.get("password"),
-  //   });
-  // };
   const theme = createTheme();
 
   const [loginDetail, setLoginDetail] = useState({
@@ -34,45 +26,37 @@ const Login = () => {
     user_password: "",
   });
 
-  // const [error, setError] = useState({
-  //   errors: "enter wrong",
-  //   isError: false,
+  // const [emailErrors, setEmailErrors] = useState({
+  //   emailValid: false,
+  //   emailError: "",
+  // });
+
+  // const [passwordErrors, setPasswordErrors] = useState({
+  //   passwordValid: false,
+  //   passwordError: "",
   // });
 
   const navigate = useNavigate();
 
-  
   const handleChange = (event, property) => {
     setLoginDetail({ ...loginDetail, [property]: event.target.value });
   };
-
-  //  const [validationError, setValidationError] = useState({
-  //    validateError: false,
-  //    emailError: "",
-  //    passwordError: "",
-  //  });
- 
-  // useEffect(() => {
-  //   console.log(loginDetail);
-  // }, [loginDetail]);
-
-  // const restData = () => {
-  //   setLoginDetail({
-  //     user_email: "",
-  //     user_password: "",
-  //   });
-  // };
 
   const submitForm = (event) => {
     event.preventDefault();
     // console.log(loginDetail);
 
-    // if (error.isError) {
-    //   toast.error("form data is invalid!!");
-    //   setError({ ...error, isError: false });
+    //data validate
+
+    // if (
+    //   emailErrors.emailValid ||
+    //   passwordErrors.passwordValid ||
+    //   loginDetail.user_email === "" ||
+    //   loginDetail.user_password === ""
+    // ) {
+    //   toast.error("please Enter Valid Details");
     //   return;
     // }
-    //data validate
 
     //call server api to generate token
     LoginUser(loginDetail)
@@ -90,21 +74,9 @@ const Login = () => {
         });
       })
       .catch((error) => {
-       
-        console.log(error.response);
-         console.log(error.response.data.user_email);
-         console.log(error.response.data.user_password);
+        // console.log(error.response);
 
-        //  setValidationError({
-        //    validateError: true,
-        //    emailError: error.response.data.user_email,
-        //    passwordError: error.response.data.user_password,
-        //  });
         toast.error(error.response.data.message);
-        // setError({
-        //   errors: error,
-        //   isError: false,
-        // });
       });
   };
 
@@ -145,11 +117,6 @@ const Login = () => {
                 autoComplete="email"
                 autoFocus
                 onChange={(e) => handleChange(e, "user_email")}
-                value={loginDetail.user_email}
-                // {...(validationError.validateError && {
-                //   error: validationError.validateError,
-                //   helperText: validationError.emailError,
-                // })}
               />
               <TextField
                 margin="normal"
@@ -162,15 +129,8 @@ const Login = () => {
                 autoComplete="current-password"
                 onChange={(e) => handleChange(e, "user_password")}
                 value={loginDetail.user_password}
-                // {...(validationError.validateError && {
-                //   error: validationError.validateError,
-                //   helperText: validationError.passwordError,
-                // })}
               />
-              <FormControlLabel
-                control={<Checkbox value="remember" color="primary" />}
-                label="Remember me"
-              />
+
               <Button
                 type="submit"
                 fullWidth
