@@ -117,6 +117,7 @@ const Login = () => {
                 autoComplete="email"
                 autoFocus
                 onChange={(e) => handleChange(e, "user_email")}
+                value={loginDetail.user_email}
               />
               <TextField
                 margin="normal"
