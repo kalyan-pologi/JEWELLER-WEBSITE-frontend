@@ -34,10 +34,10 @@ const Login = () => {
     user_password: "",
   });
 
-  const [error, setError] = useState({
-    errors: "enter wrong",
-    isError: false,
-  });
+  // const [error, setError] = useState({
+  //   errors: "enter wrong",
+  //   isError: false,
+  // });
 
   const navigate = useNavigate();
 
@@ -46,11 +46,11 @@ const Login = () => {
     setLoginDetail({ ...loginDetail, [property]: event.target.value });
   };
 
-   const [validationError, setValidationError] = useState({
-     validateError: false,
-     emailError: "",
-     passwordError: "",
-   });
+  //  const [validationError, setValidationError] = useState({
+  //    validateError: false,
+  //    emailError: "",
+  //    passwordError: "",
+  //  });
  
   // useEffect(() => {
   //   console.log(loginDetail);
@@ -95,16 +95,16 @@ const Login = () => {
          console.log(error.response.data.user_email);
          console.log(error.response.data.user_password);
 
-         setValidationError({
-           validateError: true,
-           emailError: error.response.data.user_email,
-           passwordError: error.response.data.user_password,
-         });
-        toast.error("error");
-        setError({
-          errors: error,
-          isError: false,
-        });
+        //  setValidationError({
+        //    validateError: true,
+        //    emailError: error.response.data.user_email,
+        //    passwordError: error.response.data.user_password,
+        //  });
+        toast.error(error.response.data.message);
+        // setError({
+        //   errors: error,
+        //   isError: false,
+        // });
       });
   };
 
@@ -146,10 +146,10 @@ const Login = () => {
                 autoFocus
                 onChange={(e) => handleChange(e, "user_email")}
                 value={loginDetail.user_email}
-                {...(validationError.validateError && {
-                  error: validationError.validateError,
-                  helperText: validationError.emailError,
-                })}
+                // {...(validationError.validateError && {
+                //   error: validationError.validateError,
+                //   helperText: validationError.emailError,
+                // })}
               />
               <TextField
                 margin="normal"
@@ -162,10 +162,10 @@ const Login = () => {
                 autoComplete="current-password"
                 onChange={(e) => handleChange(e, "user_password")}
                 value={loginDetail.user_password}
-                {...(validationError.validateError && {
-                  error: validationError.validateError,
-                  helperText: validationError.passwordError,
-                })}
+                // {...(validationError.validateError && {
+                //   error: validationError.validateError,
+                //   helperText: validationError.passwordError,
+                // })}
               />
               <FormControlLabel
                 control={<Checkbox value="remember" color="primary" />}

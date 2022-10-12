@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -41,8 +41,6 @@ const SignUp = () => {
 
   const handleChange = (event, property) => {
     const { name, value } = event.target;
-    console.log(name);
-    console.log(value);
 
     if (name === "userName") {
       if (value.length === 0) {
@@ -50,7 +48,8 @@ const SignUp = () => {
           userNameValid: true,
           userNameError: "user name is required",
         });
-      } else if (value.length < 4 || value.length > 10) {
+      } 
+      else if ( (value.length < 4 || value.length > 10)) {
         setErrors({
           userNameValid: true,
           userNameError: "min 4 and max 20 characters are allowed",
@@ -68,7 +67,8 @@ const SignUp = () => {
           emailValid: true,
           emailError: "Email is required",
         });
-      } else if (!regex.test(value)) {
+      } 
+      else if (!regex.test(value)) {
         setErrors({
           emailValid: true,
           emailError: "Enter valid Email address",
@@ -86,7 +86,8 @@ const SignUp = () => {
           passwordValid: true,
           passwordError: "Password is required",
         });
-      } else if (value.length < 4 || value.length > 10) {
+      } 
+      else if (value.length < 4 || value.length > 10) {
         setErrors({
           passwordValid: true,
           passwordError: "min 4 and max 20 characters are allowed",
@@ -103,20 +104,36 @@ const SignUp = () => {
   };
 
   // useEffect( ()=>{
-  //    console.log(user);
-  // },[user])
+  //    console.log("errorrrrrrrrrrr");
+  // },[])
+
+  // const validateForm = (errors) => {
+  //   let valid = true;
+  //   Object.values(errors).forEach((val) => val.length > 0 && (valid = false));
+  //   return valid;
+  // };
 
   const submitForm = (event) => {
     event.preventDefault();
 
     //data validate
 
-    if (
-      errors ||
+    // if (validateForm(errors)) {
+    //   console.info("Valid Form");
+    // } else {
+    //   console.error("Invalid Form");
+    // }
+
+    // if(errors.userNameValid || errors.emailValid || errors.passwordValid){
+    //   console.log(errors);
+    //   toast.error("something wrong")
+    // }
+    if (errors || 
       user.user_name === "" ||
       user.user_email === "" ||
       user.user_password === ""
     ) {
+      console.log(errors);
       toast.error("Please Enter Valid Details");
       return;
     }
@@ -134,11 +151,14 @@ const SignUp = () => {
         });
       })
       .catch((error) => {
+        console.log(error);
         // console.log(error.response.data.user_name);
         // console.log(error.response.data.user_email);
         // console.log(error.response.data.user_password);
-
-        toast.error("Enter Valid Details");
+        // toast.error(error.response.data.user_name);
+        // toast.error(error.response.data.user_email);
+        // toast.error(error.response.data.user_password);
+        // toast.error(error.response.data.message);
         //handling error
       });
   };
@@ -179,6 +199,7 @@ const SignUp = () => {
                     label="User Name"
                     type="text"
                     autoFocus
+                    onFocus={(e) => handleChange(e, "user_name")}
                     onChange={(e) => handleChange(e, "user_name")}
                     value={user.user_name}
                     {...(errors.userNameValid && {
