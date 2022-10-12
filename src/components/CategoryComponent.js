@@ -31,11 +31,12 @@ const BaseCardComponent = () => {
     <Base>
       <Box
         display="grid"
-        gap={2}
-        gridTemplateColumns="repeat(auto-fit, minmax(10rem, 20rem))"
+        gap={3}
+        gridTemplateColumns="repeat(auto-fit, minmax(15rem, 20rem))"
         gridTemplateRows="repeat(auto-fit)"
         margin={2}
         marginTop={10}
+        justifyContent="center"
       >
         {categories.map((category) => (
           <Box>
@@ -64,14 +65,14 @@ const BaseCardComponent = () => {
 
                   <CardContent>
                     <Typography gutterBottom variant="h6" component="div">
-                      Lizard
-                      {/* {category.category_name} */}
+                      {/* Lizard */}
+                      {category.category_name}
                     </Typography>
                     <Typography variant="body2">
-                      Lizards are a widespread group of squamate reptiles, with
+                      {/* Lizards are a widespread group of squamate reptiles, with
                       over 6,000 species, ranging across all continents except
-                      Antarctica
-                      {/* {category.category_desc} */}
+                      Antarctica */}
+                      {category.category_desc}
                     </Typography>
                   </CardContent>
                 </Card>

@@ -49,7 +49,7 @@ const Base = ({ title = "children", children }) => {
       setUser(undefined);
       //redirect to home page
       navigate("/");
-      toast.success("logged out successfully");
+      toast.success("You are Logged Out");
     });
   };
 
@@ -99,7 +99,7 @@ const Base = ({ title = "children", children }) => {
                 <Tabs
                   value={value}
                   onChange={(e, value) => setValue(value)}
-                  textColor="inherit"
+                  textColor="white"
                   indicatorColor="secondary"
                 >
                   <ReactLink
@@ -122,19 +122,23 @@ const Base = ({ title = "children", children }) => {
                   >
                     <Tab sx={{ padding: "0.5rem" }} label="Products" />
                   </ReactLink>
-
+{/* 
                   <ReactLink
                     to={"/contacts"}
                     style={{ textDecoration: "none", color: "white" }}
                   >
                     <Tab sx={{ padding: "0.5rem" }} label="Contacts" />
-                  </ReactLink>
+                  </ReactLink> */}
 
                   <ReactLink
                     to={"/favorite"}
                     style={{ textDecoration: "none", color: "white" }}
                   >
-                    <Tab icon={<FavoriteIcon />} aria-label="favorite" />
+                    <Tab
+                      icon={<FavoriteIcon />}
+                      // iconPosition="end"
+                      // label="favorite"
+                    />
                   </ReactLink>
                 </Tabs>
               </Box>

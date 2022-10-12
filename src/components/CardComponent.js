@@ -51,11 +51,12 @@ const CardComponent = () => {
     <Base>
       <Box
         display="grid"
-        gap={2}
-        gridTemplateColumns="repeat(auto-fit, minmax(10rem, 20rem))"
+        gap={3}
+        gridTemplateColumns="repeat(auto-fit, minmax(15rem, 20rem))"
         gridTemplateRows="repeat(auto-fit)"
         margin={2}
         marginTop={10}
+        justifyContent="center"
       >
         {products.map((product) => (
           <>
@@ -67,7 +68,6 @@ const CardComponent = () => {
                     color: "white",
                     borderRadius: "0.5rem",
                     border: "2px solid goldenrod",
-                    
                   }}
                 >
                   <CardMedia
@@ -80,15 +80,15 @@ const CardComponent = () => {
                   />
                   <CardContent>
                     <Typography gutterBottom variant="h6" component="div">
-                      {/* {product.product_name} */}
-                      {/* {name} */}
-                      Lizard
+                      {product.product_name}
+                      {name}
+                      {/* Lizard */}
                     </Typography>
                     <Typography variant="body2">
-                      {/* {product.product_desc} */}
-                      Lizards are a widespread group of squamate reptiles, with
+                      {product.product_desc}
+                      {/* Lizards are a widespread group of squamate reptiles, with
                       over 6,000 species, ranging across all continents except
-                      Antarctica
+                      Antarctica */}
                     </Typography>
                   </CardContent>
                   <CardActions disableSpacing>
@@ -125,9 +125,10 @@ const CardComponent = () => {
                     variant="h6"
                     component="h2"
                   >
-                    {/* {product.product_name} */}
+                    {product.product_name}
+                    {/* {product.product_id} */}
                     {/* {name} */}
-                    Text in a modal
+                    {/* Text in a modal */}
                   </Typography>
                   <CardMedia
                     component="img"

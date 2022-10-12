@@ -8,6 +8,8 @@ import SignUp from "./pages/SignUp";
 import UserDashboard from "./pages/UserDashboard";
 import CategoryComponent from "./components/CategoryComponent";
 import CardComponent from "./components/CardComponent";
+import PrivateRoutes from './pages/PrivateRoutes';
+import Favorite from './components/Favorite';
 
 function App() {
  return (
@@ -24,6 +26,9 @@ function App() {
          {/* <Route exact path="/login" element={<Login />}>
             <Route exact path="/" element={<UserDashboard />} />
           </Route> */}
+          <Route element={<PrivateRoutes/>}>
+              <Route exact path='/favorite' element={<Favorite /> }/>
+          </Route>
        </Routes>
      </BrowserRouter>
    </div>

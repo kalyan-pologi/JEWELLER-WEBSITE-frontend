@@ -17,76 +17,131 @@ import { useState } from "react";
 
 const SignUp = () => {
   const theme = createTheme();
-  // const handleSubmit = (event) => {
-  //   event.preventDefault();
-  //   const data = new FormData(event.currentTarget);
-  //   console.log({
-  //     email: data.get("email"),
-  //     password: data.get("password"),
-  //   });
-  // };
+
   const navigate = useNavigate();
-  
-   const [user, setUser] = useState({
-     user_name: "",
-     user_email: "",
-     user_password: "",
-   });
 
-   const [error, setError] = useState({
-     errors: {},
-     isError: false,
-   });
+  const [user, setUser] = useState({
+    user_name: "",
+    user_email: "",
+    user_password: "",
+  });
 
-   const handleChange = (event, property) => {
-     setUser({ ...user, [property]: event.target.value });
-   };
+  const regex = new RegExp(
+    /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i
+  );
 
-   // useEffect( ()=>{
-   //    console.log(user);
-   // },[user])
+  const [errors, setErrors] = useState({
+    userNameError: "",
+    emailError: "",
+    passwordError: "",
+    userNameValid: false,
+    emailValid: false,
+    passwordValid: false,
+  });
 
-   const restData = () => {
-     setUser({
-       user_name: "",
-       user_email: "",
-       user_password: "",
-     });
-   };
+  const handleChange = (event, property) => {
+    const { name, value } = event.target;
+    console.log(name);
+    console.log(value);
 
-   const submitForm = (event) => {
-     event.preventDefault();
-     // console.log(user);
+    if (name === "userName") {
+      if (value.length === 0) {
+        setErrors({
+          userNameValid: true,
+          userNameError: "user name is required",
+        });
+      } else if (value.length < 4 || value.length > 10) {
+        setErrors({
+          userNameValid: true,
+          userNameError: "min 4 and max 20 characters are allowed",
+        });
+      } else {
+        setErrors({
+          userNameValid: false,
+          userNameError: "",
+        });
+      }
+    }
+    if (name === "email") {
+      if (value.length === 0) {
+        setErrors({
+          emailValid: true,
+          emailError: "Email is required",
+        });
+      } else if (!regex.test(value)) {
+        setErrors({
+          emailValid: true,
+          emailError: "Enter valid Email address",
+        });
+      } else {
+        setErrors({
+          emailValid: false,
+          emailError: "",
+        });
+      }
+    }
+    if (name === "password") {
+      if (value.length === 0) {
+        setErrors({
+          passwordValid: true,
+          passwordError: "Password is required",
+        });
+      } else if (value.length < 4 || value.length > 10) {
+        setErrors({
+          passwordValid: true,
+          passwordError: "min 4 and max 20 characters are allowed",
+        });
+      } else {
+        setErrors({
+          passwordValid: false,
+          passwordError: "",
+        });
+      }
+    }
 
-     // if(error.isError){
-     //   toast.error("form data is invalid!!")
-     //   setError({...error , isError:false})
-     //   return;
-     // }
-     //data validate
+    setUser({ ...user, [property]: event.target.value });
+  };
 
-     //call server api
-     signUp(user)
-       .then((resp) => {
-         console.log(resp);
-          navigate("/login");
-         toast.success("user is register successfully");
-         setUser({
-           user_name: "",
-           user_email: "",
-           user_password: "",
-         });
-       })
-       .catch((error) => {
-         console.log(error);
-         toast.error("error");
-         //handling error
-         setError({
-           errors: error,
-           isError: true,
-         });
-       });
-   };
+  // useEffect( ()=>{
+  //    console.log(user);
+  // },[user])
+
+  const submitForm = (event) => {
+    event.preventDefault();
+
+    //data validate
+
+    if (
+      errors ||
+      user.user_name === "" ||
+      user.user_email === "" ||
+      user.user_password === ""
+    ) {
+      toast.error("Please Enter Valid Details");
+      return;
+    }
+
+    //call server api
+    signUp(user)
+      .then((resp) => {
+        console.log(resp);
+        navigate("/login");
+        toast.success("user is register successfully");
+        setUser({
+          user_name: "",
+          user_email: "",
+          user_password: "",
+        });
+      })
+      .catch((error) => {
+        // console.log(error.response.data.user_name);
+        // console.log(error.response.data.user_email);
+        // console.log(error.response.data.user_password);
+
+        toast.error("Enter Valid Details");
+        //handling error
+      });
+  };
   return (
     <Base>
       <ThemeProvider theme={theme}>
@@ -126,9 +181,10 @@ const SignUp = () => {
                     autoFocus
                     onChange={(e) => handleChange(e, "user_name")}
                     value={user.user_name}
-                    // error
-                    // helperText="Incorrect entry."
-                    // invalid={error.errors?.response?.data?.user_name ? true : false}
+                    {...(errors.userNameValid && {
+                      error: errors.userNameValid,
+                      helperText: errors.userNameError,
+                    })}
                   />
                 </Grid>
 
@@ -143,9 +199,10 @@ const SignUp = () => {
                     autoComplete="email"
                     onChange={(e) => handleChange(e, "user_email")}
                     value={user.user_email}
-                    // error
-                    // helperText="Incorrect entry."
-                    // invalid={error.errors?.response?.data?.user_email ? true : false}
+                    {...(errors.emailValid && {
+                      error: errors.emailValid,
+                      helperText: errors.emailError,
+                    })}
                   />
                 </Grid>
                 <Grid item xs={12}>
@@ -159,9 +216,10 @@ const SignUp = () => {
                     autoComplete="new-password"
                     onChange={(e) => handleChange(e, "user_password")}
                     value={user.user_password}
-                    // error
-                    // helperText="Incorrect entry."
-                    // invalid={error.errors?.response?.data?.user_password ? true : false}
+                    {...(errors.passwordValid && {
+                      error: errors.passwordValid,
+                      helperText: errors.passwordError,
+                    })}
                   />
                 </Grid>
               </Grid>
@@ -169,7 +227,7 @@ const SignUp = () => {
                 type="submit"
                 fullWidth
                 variant="contained"
-                sx={{ mt: 2.5, mb: 1.5}}
+                sx={{ mt: 2.5, mb: 1.5 }}
               >
                 Sign Up
               </Button>

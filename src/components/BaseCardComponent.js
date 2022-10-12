@@ -31,11 +31,11 @@ const BaseCardComponent = () => {
   return (
     <Box
       display="grid"
-      gap={1}
-      gridTemplateColumns="repeat(auto-fit, minmax(10rem, 20rem))"
+      gap={3}
+      gridTemplateColumns="repeat(auto-fit, minmax(15rem, 20rem))"
       gridTemplateRows="repeat(auto-fit)"
       margin={2}
-    
+      justifyContent="center"
     >
       {categories.map((category) => (
         <Box>
@@ -50,7 +50,6 @@ const BaseCardComponent = () => {
                 color: "white",
                 borderRadius: "0.5rem",
                 border: "2px solid goldenrod",
-               
               }}
             >
               <CardMedia
@@ -63,13 +62,13 @@ const BaseCardComponent = () => {
 
               <CardContent>
                 <Typography gutterBottom variant="h6" component="div">
-                  Lizard
-                  {/* {category.category_name} */}
+                  {/* Lizard */}
+                  {category.category_name}
                 </Typography>
                 <Typography variant="body2">
-                  Lizards are a widespread group of squamate reptiles, with over
-                  6,000 species, ranging across all continents except Antarctica
-                  {/* {category.category_desc} */}
+                  {/* Lizards are a widespread group of squamate reptiles, with over
+                  6,000 species, ranging across all continents except Antarctica */}
+                  {category.category_desc}
                 </Typography>
               </CardContent>
             </Card>

@@ -15,6 +15,7 @@ import MenuIcon from "@mui/icons-material/Menu";
 import HomeIcon from "@mui/icons-material/Home";
 import CategoryIcon from "@mui/icons-material/Category";
 import ContactPageIcon from "@mui/icons-material/ContactPage";
+import FavoriteIcon from "@mui/icons-material/Favorite";
 import LogoutIcon from "@mui/icons-material/Logout";
 import LoginIcon from "@mui/icons-material/Login";
 import { getCurrentUserDetail, isLoggedIn, doLogout } from "../services/auth";
@@ -96,7 +97,7 @@ const DrawerComp = () => {
                   <ListItemText>Products</ListItemText>
                 </ListItemButton>
               </ReactLink>
-
+              {/* 
               <ReactLink
                 to={"/contacts"}
                 style={{ textDecoration: "none", color: "grey" }}
@@ -106,6 +107,18 @@ const DrawerComp = () => {
                     <ContactPageIcon />
                   </ListItemIcon>
                   <ListItemText>Contacts</ListItemText>
+                </ListItemButton>
+              </ReactLink> */}
+
+              <ReactLink
+                to={"/favorite"}
+                style={{ textDecoration: "none", color: "grey" }}
+              >
+                <ListItemButton onClick={() => setOpenDrawer(false)}>
+                  <ListItemIcon>
+                    <FavoriteIcon />
+                  </ListItemIcon>
+                  <ListItemText>Favorite</ListItemText>
                 </ListItemButton>
               </ReactLink>
 
