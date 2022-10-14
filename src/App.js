@@ -10,7 +10,7 @@ import CategoryComponent from "./components/CategoryComponent";
 import PrivateRoutes from './pages/PrivateRoutes';
 import Favorite from './components/Favorite';
 import AllProductComponent from './components/AllProductComponent';
-import ProductComponent from './components/ProductComponent copy';
+import ProductComponent from './components/ProductComponent';
 
 function App() {
  return (
