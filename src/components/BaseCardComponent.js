@@ -32,7 +32,7 @@ const BaseCardComponent = () => {
     <Box
       display="grid"
       gap={3}
-      gridTemplateColumns="repeat(auto-fit, minmax(15rem, 20rem))"
+      gridTemplateColumns="repeat(auto-fit, minmax(10rem, 20rem))"
       gridTemplateRows="repeat(auto-fit)"
       margin={2}
       justifyContent="center"
@@ -41,7 +41,7 @@ const BaseCardComponent = () => {
         <Box>
           <ReactLink
             key={category.category_id}
-            to={category.category_name}
+            to={`category/${category.category_id}`}
             style={{ textDecoration: "none", color: "white" }}
           >
             <Card

@@ -15,12 +15,12 @@ export const loadAllCategoryData = () => {
 };
 
 export const loadAllProductData = () => {
-  return myAxios.get("/product/").then((response) => response.data);
+  return myAxios.get("/products/").then((response) => response.data);
 };
 
 export const loadSingleProductData = (product_id) => {
   const productId_num = parseInt(product_id);
   return myAxios
-    .get(`/product/${productId_num}`)
+    .get(`/category/${productId_num}/products`)
     .then((response) => response.data);
 };

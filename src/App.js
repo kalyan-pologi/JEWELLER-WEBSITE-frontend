@@ -7,9 +7,10 @@ import Login from "./pages/Login";
 import SignUp from "./pages/SignUp";
 import UserDashboard from "./pages/UserDashboard";
 import CategoryComponent from "./components/CategoryComponent";
-import CardComponent from "./components/CardComponent";
 import PrivateRoutes from './pages/PrivateRoutes';
 import Favorite from './components/Favorite';
+import AllProductComponent from './components/AllProductComponent';
+import ProductComponent from './components/ProductComponent copy';
 
 function App() {
  return (
@@ -21,8 +22,10 @@ function App() {
          <Route exact path="/login" element={<Login />} />
          <Route exact path="/sign-up" element={<SignUp />} />
          <Route exact path="/category" element={<CategoryComponent />} />
-         <Route exact path="/products" element={<CardComponent />} />
-         {/* <Route exact path="/:category/:product_id" element={<CardComponent />}/> */}
+         <Route exact path="/products" element={<AllProductComponent />} />
+
+         <Route exact path="/category/:categoryId" element={<ProductComponent />}/>
+         {/* <Route exact path="/products/:product_id" element={<CardComponent />}/> */}
          {/* <Route exact path="/login" element={<Login />}>
             <Route exact path="/" element={<UserDashboard />} />
           </Route> */}

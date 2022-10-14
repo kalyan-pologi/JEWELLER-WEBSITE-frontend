@@ -11,12 +11,14 @@ import {
 } from "@mui/material";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import ShareIcon from "@mui/icons-material/Share";
-import { useParams } from "react-router-dom";
+import { Link as ReactLink } from "react-router-dom";
 import React, { useState, useEffect } from "react";
-import { loadAllProductData } from "../services/userService";
+import {
+  loadAllProductData
+} from "../services/userService";
 import Base from "./Base";
 
-const CardComponent = () => {
+const AllProductComponent = () => {
   const [openPhoto, setOpenPhoto] = useState(false);
 
   const StyleModal = styled(Modal)({
@@ -24,8 +26,6 @@ const CardComponent = () => {
     alignItems: "center",
     justifyContent: "center",
   });
-
-  const { name } = useParams();
 
   const [products, setProducts] = useState([
     {
@@ -35,6 +35,7 @@ const CardComponent = () => {
       product_image: "",
     },
   ]);
+
 
   useEffect(() => {
     loadAllProductData()
@@ -81,7 +82,6 @@ const CardComponent = () => {
                   <CardContent>
                     <Typography gutterBottom variant="h6" component="div">
                       {product.product_name}
-                      {name}
                       {/* Lizard */}
                     </Typography>
                     <Typography variant="body2">
@@ -92,21 +92,28 @@ const CardComponent = () => {
                     </Typography>
                   </CardContent>
                   <CardActions disableSpacing>
+                    <ReactLink to={"/favorite"}>
                     <Button size="large">
                       <FavoriteIcon />
                     </Button>
+                    </ReactLink>
                     {/* <Checkbox icon={<FavoriteBorderIcon />} checkedIcon={<FavoriteIcon />} /> */}
+                    <ReactLink>
                     <Button size="large">
                       <ShareIcon />
                     </Button>
+                    </ReactLink>
                   </CardActions>
                 </Card>
               </Box>
+              {/* {singleProduct.map((prod) => (
+                <> */}
               <StyleModal
                 open={openPhoto}
                 onClose={(e) => setOpenPhoto(false)}
                 aria-labelledby="modal-modal-title"
                 aria-describedby="modal-modal-description"
+                // onClick={ handleProduct}
               >
                 <Box
                   sx={{
@@ -126,6 +133,7 @@ const CardComponent = () => {
                     component="h2"
                   >
                     {product.product_name}
+                    {product.product_desc}
                     {/* {product.product_id} */}
                     {/* {name} */}
                     {/* Text in a modal */}
@@ -139,6 +147,8 @@ const CardComponent = () => {
                   />
                 </Box>
               </StyleModal>
+              {/* </>
+              ))} */}
             </Box>
           </>
         ))}
@@ -147,4 +157,4 @@ const CardComponent = () => {
   );
 };
 
-export default CardComponent;
+export default AllProductComponent;

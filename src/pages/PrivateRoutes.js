@@ -9,8 +9,13 @@ const PrivateRoutes = () => {
   return token ? (
     <Outlet />
   ) : (
-     <Navigate to="/login" />
-  )
+    <>
+      {toast.info("please login to see your favorites", {
+        toastId: "info1",
+      })}
+      <Navigate to="/login" />
+    </>
+  );
 };
 
 export default PrivateRoutes;
