@@ -1,5 +1,6 @@
 import React from "react";
 import { Box, CardMedia } from "@mui/material";
+import image from '../images/img-2.jpg'
 const Banner = () => {
   return (
     // <div  className="banner-container">
@@ -15,7 +16,7 @@ const Banner = () => {
         component="img"
         alt="green iguana"
         height="500px"
-        image="https://picsum.photos/300/200"
+        image={image}
         // image={product.product_image}
       />
     </Box>

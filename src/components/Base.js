@@ -72,7 +72,16 @@ const Base = ({ title = "children", children }) => {
                       textDecoration: "none",
                     }}
                   >
-                    Jewellery
+                    SRI DARSHINI
+                  </Typography>
+                  <Typography
+                    sx={{
+                      fontSize: "1rem",
+                      marginLeft: "auto",
+                      textDecoration: "none",
+                    }}
+                  >
+                    Gold and silver merchant
                   </Typography>
                 </ReactLink>
                 {/* <Search>
@@ -88,7 +97,16 @@ const Base = ({ title = "children", children }) => {
                   style={{ textDecoration: "none", color: "white" }}
                 >
                   <Typography sx={{ fontSize: "1.5rem", marginLeft: "auto" }}>
-                    Jewellery
+                    SRI DARSHINI
+                  </Typography>
+                  <Typography
+                    sx={{
+                      fontSize: "1rem",
+                      marginLeft: "auto",
+                      textDecoration: "none",
+                    }}
+                  >
+                    Gold and silver merchant
                   </Typography>
                 </ReactLink>
                 {/* <Search>
@@ -122,7 +140,7 @@ const Base = ({ title = "children", children }) => {
                   >
                     <Tab sx={{ padding: "0.5rem" }} label="Products" />
                   </ReactLink>
-{/* 
+                  {/* 
                   <ReactLink
                     to={"/contacts"}
                     style={{ textDecoration: "none", color: "white" }}
@@ -175,17 +193,25 @@ const Base = ({ title = "children", children }) => {
                 <Box sx={{ marginLeft: "auto" }}>
                   <ReactLink
                     onClick={logout}
-                    style={{ textDecoration: "none", color: "white" }}
+                    style={{
+                      textDecoration: "none",
+                      color: "white",
+                      display: "flex",
+                    }}
                   >
+                    <p>{user}</p>
                     <Button
-                      sx={{ marginLeft: "10px" }}
+                      sx={{
+                        marginLeft: "10px",
+                        marginTop: "10px",
+                        height: "35px",
+                      }}
                       variant="contained"
                       size="small"
                       startIcon={<LogoutIcon />}
                     >
                       LogOut
                     </Button>
-                    <p>{user}</p>
                   </ReactLink>
                 </Box>
               )}

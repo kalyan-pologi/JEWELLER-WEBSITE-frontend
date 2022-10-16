@@ -11,14 +11,19 @@ import {
 } from "@mui/material";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import ShareIcon from "@mui/icons-material/Share";
-import { Link as ReactLink, useParams } from "react-router-dom";
+import { Link as ReactLink, useNavigate, useParams } from "react-router-dom";
 import React, { useState, useEffect } from "react";
 import {
-  loadSingleProductData,
+  addFavoriteProductByUser,
+  deleteFavoriteProductByUser,
+  loadProductByCategoryData,
 } from "../services/userService";
 import Base from "./Base";
+import { getCurrentUserDetail, isLoggedIn } from "../services/auth";
 
 const ProductComponent = () => {
+  const navigate = useNavigate();
+
   const [openPhoto, setOpenPhoto] = useState(false);
 
   const StyleModal = styled(Modal)({
@@ -40,7 +45,7 @@ const ProductComponent = () => {
 
   console.log(categoryId);
   useEffect(() => {
-    loadSingleProductData(categoryId)
+    loadProductByCategoryData(categoryId)
       .then((data) => {
         console.log(data);
         setSignlePrduct(data);
@@ -49,6 +54,50 @@ const ProductComponent = () => {
         console.log(error);
       });
   }, [categoryId]);
+
+  const [login, setLogin] = useState(false);
+  const [user, setUser] = useState(undefined);
+
+  const [isFavorite, setIsFavorite] = useState(false);
+
+  useEffect(() => {
+    setLogin(isLoggedIn());
+    setUser(getCurrentUserDetail());
+  }, [login]);
+
+  console.log(login);
+  console.log(user);
+  const favoriteHandler = (productId) => {
+    console.log("clicked");
+    console.log(productId);
+    // eslint-disable-next-line no-lone-blocks
+    {
+      login
+        ? addFavoriteProductByUser(user, productId)
+            .then((data) => {
+              console.log("clicked");
+              console.log(data);
+              //  setFA(data);
+            })
+            .catch((error) => {
+              console.log(error);
+            })
+        : navigate("/login");
+    }
+  };
+
+  const unFavoriteHandler = (productId) => {
+    console.log("un-clicked");
+    console.log(productId);
+    deleteFavoriteProductByUser(user, productId)
+      .then((data) => {
+        console.log(data);
+        //  setFA(data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
 
   return (
     <Base>
@@ -63,7 +112,7 @@ const ProductComponent = () => {
       >
         {singleProduct.map((product) => (
           <>
-            <Box>
+            <Box key={product.product_id}>
               <Box gap={2}>
                 <Card
                   sx={{
@@ -83,7 +132,7 @@ const ProductComponent = () => {
                   />
                   <CardContent>
                     <Typography gutterBottom variant="h6" component="div">
-                      {product.product_name}
+                      {product.product_name}-{product.product_id}
                       {/* Lizard */}
                     </Typography>
                     <Typography variant="body2">
@@ -94,12 +143,21 @@ const ProductComponent = () => {
                     </Typography>
                   </CardContent>
                   <CardActions disableSpacing>
-                    <ReactLink to={"/favorite"}>
-                      <Button size="large">
-                        <FavoriteIcon />
+                    {isFavorite ? (
+                      <Button
+                        size="large"
+                        onClick={() => unFavoriteHandler(product.product_id)}
+                      >
+                        <FavoriteIcon color="error" />
                       </Button>
-                    </ReactLink>
-                    {/* <Checkbox icon={<FavoriteBorderIcon />} checkedIcon={<FavoriteIcon />} /> */}
+                    ) : (
+                      <Button
+                        size="large"
+                        onClick={() => favoriteHandler(product.product_id)}
+                      >
+                        <FavoriteIcon sx={{ color: "white" }} />
+                      </Button>
+                    )}
                     <ReactLink>
                       <Button size="large">
                         <ShareIcon />
@@ -108,14 +166,15 @@ const ProductComponent = () => {
                   </CardActions>
                 </Card>
               </Box>
-              {/* {singleProduct.map((prod) => (
-                <> */}
+
               <StyleModal
                 open={openPhoto}
                 onClose={(e) => setOpenPhoto(false)}
+                // onClick={(e) => handleModal(product)}
                 aria-labelledby="modal-modal-title"
                 aria-describedby="modal-modal-description"
                 // onClick={ handleProduct}
+                key={product.product_id}
               >
                 <Box
                   sx={{
@@ -134,8 +193,8 @@ const ProductComponent = () => {
                     variant="h6"
                     component="h2"
                   >
-                    {product.product_name}
-                    {product.product_desc}
+                    {product.product_id}
+                    {/* {singleProduct[0].product_id} */}
                     {/* {product.product_id} */}
                     {/* {name} */}
                     {/* Text in a modal */}
@@ -149,8 +208,6 @@ const ProductComponent = () => {
                   />
                 </Box>
               </StyleModal>
-              {/* </>
-              ))} */}
             </Box>
           </>
         ))}

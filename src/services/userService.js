@@ -18,9 +18,41 @@ export const loadAllProductData = () => {
   return myAxios.get("/products/").then((response) => response.data);
 };
 
-export const loadSingleProductData = (product_id) => {
-  const productId_num = parseInt(product_id);
+export const loadProductByCategoryData = (categoryId) => {
+  const category_id = parseInt(categoryId);
   return myAxios
-    .get(`/category/${productId_num}/products`)
+    .get(`/category/${category_id}/products`)
     .then((response) => response.data);
 };
+
+export const loadSingleProductData = (productId) => {
+  const product_id = parseInt(productId);
+  return myAxios
+    .get(`/products/${product_id}`)
+    .then((response) => response.data);
+};
+
+export const getAllFavoriteProductsByUser = (user) =>{
+
+  return myAxios
+  .get(`/user/${user}/favorite`)
+  .then( (response) => response.data);
+}
+
+export const addFavoriteProductByUser = (userName,productId) =>{
+   
+    const product_id = parseInt(productId);
+
+    return myAxios
+      .post(`/user/${userName}/${product_id}/add-favorite`)
+      .then((response) => response.data);
+}
+export const deleteFavoriteProductByUser = (userName, productId) => {
+  const product_id = parseInt(productId);
+
+  return myAxios
+    .post(`/user/${userName}/${product_id}/un-favorite`)
+    .then((response) => response.data);
+};
+
+
