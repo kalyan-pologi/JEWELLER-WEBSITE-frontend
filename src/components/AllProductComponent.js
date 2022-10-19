@@ -64,11 +64,11 @@ const AllProductComponent = () => {
   useEffect(() => {
     loadAllProductData()
       .then((data) => {
-        console.log(data);
+        // console.log(data);
         setProducts(data);
       })
       .catch((error) => {
-        console.log(error);
+        // console.log(error);
         // toast.error(error.response.data.message);
       });
   }, []);
@@ -76,11 +76,11 @@ const AllProductComponent = () => {
   useEffect(() => {
     getAllFavoriteProductsByUser(user)
       .then((data) => {
-        console.log(data);
+        // console.log(data);
         setFavoritePrduct(data);
       })
       .catch((error) => {
-        console.log(error);
+        // console.log(error);
         // toast.error(error.response.data.message);
       });
   }, []);
@@ -125,7 +125,7 @@ const AllProductComponent = () => {
                toast.success("product added to favorite!!");
             })
             .catch((error) => {
-              console.log(error);
+              // console.log(error);
               toast.error(error.response.data.message);
             })
         : navigate("/login");
@@ -171,8 +171,8 @@ const AllProductComponent = () => {
                     background: "black",
                     color: "white",
                     borderRadius: "0.2rem",
-                    border: "2px solid goldenrod",
-                    height: "23rem",
+                    border: "3px solid goldenrod",
+                    height: "24rem",
                   }}
                 >
                   <CardMedia
@@ -196,7 +196,7 @@ const AllProductComponent = () => {
                       Antarctica */}
                     </Typography>
                   </CardContent>
-                  <CardActions disableSpacing sx={{ marginTop: "-1rem" }}>
+                  <CardActions disableSpacing sx={{ marginBottom:"1rem" }}>
                     <Button
                       size="large"
                       onClick={() => favoriteHandler(product.product_id)}

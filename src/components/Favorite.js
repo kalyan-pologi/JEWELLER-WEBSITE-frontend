@@ -49,26 +49,26 @@ const Favorite = () => {
     setUser(getCurrentUserDetail());
     getAllFavoriteProductsByUser(user)
       .then((data) => {
-        console.log(data);
+        // console.log(data);
         setFavoritePrduct(data);
       })
       .catch((error) => {
-        console.log(error);
+        // console.log(error);
         // toast.error(error.response.data.message);
       });
   },[user]);
 
   const unFavoriteHandler = (productId) => {
-    console.log("un-clicked");
-    console.log(productId);
+    // console.log("un-clicked");
+    // console.log(productId);
     deleteFavoriteProductByUser(user, productId)
       .then((data) => {
-        console.log(data);
+        // console.log(data);
         toast.info("product remove from favorite!!");
         window.location.reload();
       })
       .catch((error) => {
-        console.log(error);
+        // console.log(error);
         // toast.error(error.response.data.message);
       });
   };
@@ -95,8 +95,8 @@ const Favorite = () => {
                     background: "black",
                     color: "white",
                     borderRadius: "0.2rem",
-                    border: "2px solid goldenrod",
-                    height: "23rem",
+                    border: "3px solid goldenrod",
+                    height: "24rem",
                   }}
                 >
                   <CardMedia
@@ -119,7 +119,7 @@ const Favorite = () => {
                       Antarctica */}
                     </Typography>
                   </CardContent>
-                  <CardActions disableSpacing sx={{ marginTop: "-1rem" }}>
+                  <CardActions disableSpacing sx={{ marginBottom: "1rem" }}>
                     {/* <ReactLink to={"/favorite"}>
                       <Button size="large">
                         <FavoriteIcon />

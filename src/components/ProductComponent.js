@@ -48,11 +48,11 @@ const ProductComponent = () => {
   useEffect(() => {
     loadProductByCategoryData(categoryId)
       .then((data) => {
-        console.log(data);
+        // console.log(data);
         setSignlePrduct(data);
       })
       .catch((error) => {
-        console.log(error);
+        // console.log(error);
         // toast.error(error.response.data.message);
       });
   }, [categoryId]);
@@ -79,13 +79,13 @@ const ProductComponent = () => {
       login
         ? addFavoriteProductByUser(user, productId)
             .then((data) => {
-              console.log("clicked");
+              // console.log("clicked");
               // console.log(data);
               // window.location.reload();
             toast.success("product added to favorite!!");
             })
             .catch((error) => {
-              console.log(error);
+              // console.log(error);
               // toast.error(error.response.data.message);
             })
         : navigate("/login");
@@ -127,15 +127,15 @@ const ProductComponent = () => {
                     background: "black",
                     color: "white",
                     borderRadius: "0.2rem",
-                    border: "2px solid goldenrod",
-                    height: "23rem",
+                    border: "3px solid goldenrod",
+                    height: "24rem",
                   }}
                 >
                   <CardMedia
                     onClick={(e) => setOpenPhoto(true)}
                     component="img"
                     alt="green iguana"
-                    height="60%"
+                    height="55%"
                     src={`data:image/jpeg;base64,${product.product_image}`}
                   />
                   <Divider variant="middle" color="white" />
@@ -152,7 +152,7 @@ const ProductComponent = () => {
                     </Typography>
                   </CardContent>
 
-                  <CardActions disableSpacing sx={{ marginTop: "-1rem" }}>
+                  <CardActions disableSpacing sx={{ marginBottom: "1rem" }}>
                     <Button
                       size="large"
                       onClick={() => favoriteHandler(product.product_id)}

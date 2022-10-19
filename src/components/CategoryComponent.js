@@ -12,11 +12,11 @@ const BaseCardComponent = () => {
   useEffect(() => {
     loadAllCategoryData()
       .then((data) => {
-        console.log(data);
+        // console.log(data);
         setCategories(data);
       })
       .catch((error) => {
-        console.log(error);
+        // console.log(error);
          toast.error(error.response.data.message);
       });
   }, []);
@@ -56,7 +56,7 @@ const BaseCardComponent = () => {
                     background: "black",
                     color: "white",
                     borderRadius: "0.2rem",
-                    border: "2px solid goldenrod",
+                    border: "3px solid goldenrod",
                     height: "18rem",
                   }}
                 >

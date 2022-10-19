@@ -7,10 +7,10 @@ const Banner = () => {
     //   <img className="banner-img" src={bannerImage} alt=""></img>
     // </div>
     <Box
-      margin={2}
+      margin={1}
       marginTop={9}
       borderRadius={0.5}
-      border={"2px solid goldenrod"}
+      border={"4px solid goldenrod"}
     >
       <CardMedia
         

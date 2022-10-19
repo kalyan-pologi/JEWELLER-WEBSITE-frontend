@@ -126,7 +126,7 @@ const SignUp = () => {
     //call server api
     signUp(user)
       .then((resp) => {
-        console.log(resp);
+        // console.log(resp);
         navigate("/login");
         toast.success("user is register successfully");
         setUser({
