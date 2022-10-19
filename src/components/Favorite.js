@@ -6,6 +6,7 @@ import {
   CardActions,
   CardContent,
   CardMedia,
+  Divider,
   Modal,
   styled,
   Typography,
@@ -14,8 +15,12 @@ import FavoriteIcon from "@mui/icons-material/Favorite";
 import ShareIcon from "@mui/icons-material/Share";
 import { Link as ReactLink, useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
-import { deleteFavoriteProductByUser, getAllFavoriteProductsByUser } from "../services/userService";
+import {
+  deleteFavoriteProductByUser,
+  getAllFavoriteProductsByUser,
+} from "../services/userService";
 import Base from "./Base";
+import { toast } from "react-toastify";
 import { getCurrentUserDetail, isLoggedIn } from "../services/auth";
 
 const Favorite = () => {
@@ -35,10 +40,10 @@ const Favorite = () => {
       product_image: "",
     },
   ]);
- const [login, setLogin] = useState(false);
- const [user, setUser] = useState(undefined);
+  const [login, setLogin] = useState(false);
+  const [user, setUser] = useState(undefined);
 
- const [isFavorite, setIsFavorite] = useState(false);
+  const [isFavorite, setIsFavorite] = useState(false);
 
   useEffect(() => {
     setUser(getCurrentUserDetail());
@@ -49,23 +54,26 @@ const Favorite = () => {
       })
       .catch((error) => {
         console.log(error);
+        // toast.error(error.response.data.message);
       });
-  }, [user]);
+  },[user]);
 
-    const unFavoriteHandler = (productId) => {
-      console.log("un-clicked");
-      console.log(productId);
-      deleteFavoriteProductByUser(user, productId)
-        .then((data) => {
-          console.log(data);
-          //  setFA(data);
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    };
+  const unFavoriteHandler = (productId) => {
+    console.log("un-clicked");
+    console.log(productId);
+    deleteFavoriteProductByUser(user, productId)
+      .then((data) => {
+        console.log(data);
+        toast.info("product remove from favorite!!");
+        window.location.reload();
+      })
+      .catch((error) => {
+        console.log(error);
+        // toast.error(error.response.data.message);
+      });
+  };
 
-
+  useEffect(() => {}, [favoriteProduct]);
 
   return (
     <Base>
@@ -86,18 +94,19 @@ const Favorite = () => {
                   sx={{
                     background: "black",
                     color: "white",
-                    borderRadius: "0.5rem",
+                    borderRadius: "0.2rem",
                     border: "2px solid goldenrod",
+                    height: "23rem",
                   }}
                 >
                   <CardMedia
                     onClick={(e) => setOpenPhoto(true)}
                     component="img"
                     alt="green iguana"
-                    height="60%"
-                    image="https://picsum.photos/300/200"
-                    // image={product.product_image}
+                    height="55%"
+                    src={`data:image/jpeg;base64,${product.product_image}`}
                   />
+                  <Divider variant="middle" color="white" />
                   <CardContent>
                     <Typography gutterBottom variant="h6" component="div">
                       {product.product_name}-{product.product_id}
@@ -110,21 +119,19 @@ const Favorite = () => {
                       Antarctica */}
                     </Typography>
                   </CardContent>
-                  <CardActions disableSpacing>
+                  <CardActions disableSpacing sx={{ marginTop: "-1rem" }}>
                     {/* <ReactLink to={"/favorite"}>
                       <Button size="large">
                         <FavoriteIcon />
                       </Button>
                     </ReactLink> */}
                     {/* {isFavorite ? ( */}
-                      <Button
-                        size="large"
-                        onClick={() =>
-                          unFavoriteHandler(product.product_id)
-                        }
-                      >
-                        <FavoriteIcon color="error" />
-                      </Button>
+                    <Button
+                      size="large"
+                      onClick={() => unFavoriteHandler(product.product_id)}
+                    >
+                      <FavoriteIcon color="error" />
+                    </Button>
                     {/* ) : (
                       <Button
                         size="large"

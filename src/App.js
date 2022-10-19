@@ -23,12 +23,7 @@ function App() {
          <Route exact path="/sign-up" element={<SignUp />} />
          <Route exact path="/category" element={<CategoryComponent />} />
          <Route exact path="/products" element={<AllProductComponent />} />
-
          <Route exact path="/category/:categoryId" element={<ProductComponent />}/>
-         {/* <Route exact path="/products/:product_id" element={<CardComponent />}/> */}
-         {/* <Route exact path="/login" element={<Login />}>
-            <Route exact path="/" element={<UserDashboard />} />
-          </Route> */}
           <Route element={<PrivateRoutes/>}>
               <Route exact path='/favorite' element={<Favorite /> }/>
           </Route>

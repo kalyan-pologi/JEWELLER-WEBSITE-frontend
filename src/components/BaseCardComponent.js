@@ -1,20 +1,12 @@
 import React from "react";
-import { Box, Card, CardContent, CardMedia, Typography } from "@mui/material";
+import { Box, Card, CardContent, CardMedia, Divider, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
 import { Link as ReactLink } from "react-router-dom";
-
+import { toast } from "react-toastify";
 import { loadAllCategoryData } from "../services/userService";
 
 const BaseCardComponent = () => {
 
- const [categories, setCategories] = useState([
-   {
-     category_id: "",
-     category_name: "",
-     category_desc: "",
-     category_image: "",
-   },
- ]);
 
  useEffect(() => {
    loadAllCategoryData()
@@ -24,9 +16,19 @@ const BaseCardComponent = () => {
      })
      .catch((error) => {
        console.log(error);
+        toast.error(error.response.data.message);
      });
  }, []);
+ const [categories, setCategories] = useState([
+   {
+     category_id: "",
+     category_name: "",
+     category_desc: "",
+     category_image: "",
+   },
+ ]);
 
+ console.log(categories.category_image);
 
   return (
     <Box
@@ -37,10 +39,10 @@ const BaseCardComponent = () => {
       margin={2}
       justifyContent="center"
     >
-      {categories.map((category) => (
+      {categories.map((category, index) => (
         <Box>
           <ReactLink
-            key={category.category_id}
+            key={index}
             to={`category/${category.category_id}`}
             style={{ textDecoration: "none", color: "white" }}
           >
@@ -48,18 +50,20 @@ const BaseCardComponent = () => {
               sx={{
                 background: "black",
                 color: "white",
-                borderRadius: "0.5rem",
+                borderRadius: "0.2rem",
                 border: "2px solid goldenrod",
+                height: "18rem",
               }}
             >
               <CardMedia
                 component="img"
                 alt="green iguana"
-                height="60%"
-                image="https://picsum.photos/300/200"
-                // image = {category.category_image}
+                height="65%"
+                // image="https://picsum.photos/300/200"
+                // src={category.category_image}
+                src={`data:image/jpeg;base64,${category.category_image}`}
               />
-
+              <Divider variant="middle" color="white" />
               <CardContent>
                 <Typography gutterBottom variant="h6" component="div">
                   {/* Lizard */}

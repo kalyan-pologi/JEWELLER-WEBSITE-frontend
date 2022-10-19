@@ -61,29 +61,27 @@ const Base = ({ title = "children", children }) => {
             <>
               <DrawerComp />
               <Box flex={3} sx={{ marginLeft: "auto", textAlign: "center" }}>
-                <ReactLink
-                  to="/"
-                  style={{ textDecoration: "none", color: "white" }}
-                >
-                  <Typography
-                    sx={{
-                      fontSize: "1.5rem",
-                      marginLeft: "auto",
-                      textDecoration: "none",
-                    }}
+                <Box>
+                  <ReactLink
+                    to={"/"}
+                    style={{ textDecoration: "none", color: "white" }}
                   >
-                    SRI DARSHINI
-                  </Typography>
-                  <Typography
-                    sx={{
-                      fontSize: "1rem",
-                      marginLeft: "auto",
-                      textDecoration: "none",
-                    }}
-                  >
-                    Gold and silver merchant
-                  </Typography>
-                </ReactLink>
+                    <Typography
+                      sx={{
+                        fontSize: "1.5rem",
+                        marginLeft: "auto",
+                        "&:hover": {
+                          color: "#FDBD01",
+                        },
+                      }}
+                    >
+                      <Box>SRI DARSHINI</Box>
+                      <Box sx={{ fontSize: "1rem" }}>
+                        Gold and silver merchant
+                      </Box>
+                    </Typography>
+                  </ReactLink>
+                </Box>
                 {/* <Search>
                   <InputBase placeholder="search..." />
                 </Search> */}
@@ -92,23 +90,28 @@ const Base = ({ title = "children", children }) => {
           ) : (
             <>
               <Box flex={6} sx={{ marginLeft: "auto", textAlign: "center" }}>
-                <ReactLink
-                  to={"/"}
-                  style={{ textDecoration: "none", color: "white" }}
-                >
-                  <Typography sx={{ fontSize: "1.5rem", marginLeft: "auto" }}>
-                    SRI DARSHINI
-                  </Typography>
-                  <Typography
-                    sx={{
-                      fontSize: "1rem",
-                      marginLeft: "auto",
-                      textDecoration: "none",
-                    }}
+                <Box>
+                  <ReactLink
+                    to={"/"}
+                    style={{ textDecoration: "none", color: "white" }}
                   >
-                    Gold and silver merchant
-                  </Typography>
-                </ReactLink>
+                    <Typography
+                      sx={{
+                        fontSize: "1.5rem",
+                        marginLeft: "auto",
+                        "&:hover": {
+                          color: "#FDBD01",
+                        },
+                      }}
+                    >
+                      <Box>SRI DARSHINI</Box>
+                      <Box sx={{ fontSize: "1rem" }}>
+                        Gold and silver merchant
+                      </Box>
+                    </Typography>
+                  </ReactLink>
+                </Box>
+
                 {/* <Search>
                   <InputBase placeholder="search..." />
                 </Search> */}
@@ -124,21 +127,45 @@ const Base = ({ title = "children", children }) => {
                     to={"/"}
                     style={{ textDecoration: "none", color: "white" }}
                   >
-                    <Tab sx={{ padding: "0.5rem" }} label="Home" />
+                    <Tab
+                      sx={{
+                        padding: "0.5rem",
+                        "&:hover": {
+                          color: "#FDBD01",
+                        },
+                      }}
+                      label="Home"
+                    />
                   </ReactLink>
 
                   <ReactLink
                     to={"/category"}
                     style={{ textDecoration: "none", color: "white" }}
                   >
-                    <Tab sx={{ padding: "0.5rem" }} label="Category" />
+                    <Tab
+                      sx={{
+                        padding: "0.5rem",
+                        "&:hover": {
+                          color: "#FDBD01",
+                        },
+                      }}
+                      label="Category"
+                    />
                   </ReactLink>
 
                   <ReactLink
                     to={"/products"}
                     style={{ textDecoration: "none", color: "white" }}
                   >
-                    <Tab sx={{ padding: "0.5rem" }} label="Products" />
+                    <Tab
+                      sx={{
+                        padding: "0.5rem",
+                        "&:hover": {
+                          color: "#FDBD01",
+                        },
+                      }}
+                      label="Products"
+                    />
                   </ReactLink>
                   {/* 
                   <ReactLink
@@ -156,6 +183,11 @@ const Base = ({ title = "children", children }) => {
                       icon={<FavoriteIcon />}
                       // iconPosition="end"
                       // label="favorite"
+                      sx={{
+                        "&:hover": {
+                          color: "#FDBD01",
+                        },
+                      }}
                     />
                   </ReactLink>
                 </Tabs>

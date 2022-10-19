@@ -64,7 +64,11 @@ const DrawerComp = () => {
             <List>
               <ReactLink
                 to={"/"}
-                style={{ textDecoration: "none", color: "grey" }}
+                style={{
+                  textDecoration: "none",
+                  color: "grey",
+                }}
+                
               >
                 <ListItemButton onClick={() => setOpenDrawer(false)}>
                   <ListItemIcon>

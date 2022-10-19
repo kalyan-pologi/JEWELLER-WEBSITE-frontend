@@ -5,6 +5,7 @@ import {
   CardActions,
   CardContent,
   CardMedia,
+  Divider,
   Modal,
   styled,
   Typography,
@@ -19,6 +20,7 @@ import {
   loadProductByCategoryData,
 } from "../services/userService";
 import Base from "./Base";
+import { toast } from "react-toastify";
 import { getCurrentUserDetail, isLoggedIn } from "../services/auth";
 
 const ProductComponent = () => {
@@ -43,7 +45,6 @@ const ProductComponent = () => {
     },
   ]);
 
-  console.log(categoryId);
   useEffect(() => {
     loadProductByCategoryData(categoryId)
       .then((data) => {
@@ -52,6 +53,7 @@ const ProductComponent = () => {
       })
       .catch((error) => {
         console.log(error);
+        // toast.error(error.response.data.message);
       });
   }, [categoryId]);
 
@@ -65,39 +67,45 @@ const ProductComponent = () => {
     setUser(getCurrentUserDetail());
   }, [login]);
 
-  console.log(login);
-  console.log(user);
+  // console.log(login);
+  // console.log(user);
+
+
   const favoriteHandler = (productId) => {
-    console.log("clicked");
-    console.log(productId);
+    // console.log("clicked");
+    // console.log(productId);
     // eslint-disable-next-line no-lone-blocks
     {
       login
         ? addFavoriteProductByUser(user, productId)
             .then((data) => {
               console.log("clicked");
-              console.log(data);
-              //  setFA(data);
+              // console.log(data);
+              // window.location.reload();
+            toast.success("product added to favorite!!");
             })
             .catch((error) => {
               console.log(error);
+              // toast.error(error.response.data.message);
             })
         : navigate("/login");
     }
   };
 
-  const unFavoriteHandler = (productId) => {
-    console.log("un-clicked");
-    console.log(productId);
-    deleteFavoriteProductByUser(user, productId)
-      .then((data) => {
-        console.log(data);
-        //  setFA(data);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
+  // const unFavoriteHandler = (productId) => {
+  //   console.log("un-clicked");
+  //   console.log(productId);
+  //   deleteFavoriteProductByUser(user, productId)
+  //     .then((data) => {
+  //       console.log(data);
+  //       // window.location.reload();
+        
+  //     })
+  //     .catch((error) => {
+  //       console.log(error);
+  // toast.error(error.response.data.message);
+  //     });
+  // };
 
   return (
     <Base>
@@ -118,8 +126,9 @@ const ProductComponent = () => {
                   sx={{
                     background: "black",
                     color: "white",
-                    borderRadius: "0.5rem",
+                    borderRadius: "0.2rem",
                     border: "2px solid goldenrod",
+                    height: "23rem",
                   }}
                 >
                   <CardMedia
@@ -127,9 +136,9 @@ const ProductComponent = () => {
                     component="img"
                     alt="green iguana"
                     height="60%"
-                    image="https://picsum.photos/300/200"
-                    // image={product.product_image}
+                    src={`data:image/jpeg;base64,${product.product_image}`}
                   />
+                  <Divider variant="middle" color="white" />
                   <CardContent>
                     <Typography gutterBottom variant="h6" component="div">
                       {product.product_name}-{product.product_id}
@@ -142,8 +151,15 @@ const ProductComponent = () => {
                       Antarctica */}
                     </Typography>
                   </CardContent>
-                  <CardActions disableSpacing>
-                    {isFavorite ? (
+
+                  <CardActions disableSpacing sx={{ marginTop: "-1rem" }}>
+                    <Button
+                      size="large"
+                      onClick={() => favoriteHandler(product.product_id)}
+                    >
+                      <FavoriteIcon sx={{ color: "white" }} />
+                    </Button>
+                    {/* {isFavorite ? (
                       <Button
                         size="large"
                         onClick={() => unFavoriteHandler(product.product_id)}
@@ -157,7 +173,7 @@ const ProductComponent = () => {
                       >
                         <FavoriteIcon sx={{ color: "white" }} />
                       </Button>
-                    )}
+                    )} */}
                     <ReactLink>
                       <Button size="large">
                         <ShareIcon />
@@ -167,7 +183,7 @@ const ProductComponent = () => {
                 </Card>
               </Box>
 
-              <StyleModal
+              {/* <StyleModal
                 open={openPhoto}
                 onClose={(e) => setOpenPhoto(false)}
                 // onClick={(e) => handleModal(product)}
@@ -194,10 +210,7 @@ const ProductComponent = () => {
                     component="h2"
                   >
                     {product.product_id}
-                    {/* {singleProduct[0].product_id} */}
-                    {/* {product.product_id} */}
-                    {/* {name} */}
-                    {/* Text in a modal */}
+             
                   </Typography>
                   <CardMedia
                     component="img"
@@ -207,7 +220,7 @@ const ProductComponent = () => {
                     // image={product.product_image}
                   />
                 </Box>
-              </StyleModal>
+              </StyleModal> */}
             </Box>
           </>
         ))}

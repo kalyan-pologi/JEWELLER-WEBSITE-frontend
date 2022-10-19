@@ -5,6 +5,7 @@ import {
   CardActions,
   CardContent,
   CardMedia,
+  Divider,
   Modal,
   styled,
   Typography,
@@ -16,8 +17,11 @@ import React, { useState, useEffect } from "react";
 import {
   addFavoriteProductByUser,
   deleteFavoriteProductByUser,
+  getAllFavoriteProductsByUser,
+  isProductFavoriteByProductId,
   loadAllProductData,
 } from "../services/userService";
+import { toast } from "react-toastify";
 import Base from "./Base";
 import { getCurrentUserDetail, isLoggedIn } from "../services/auth";
 
@@ -32,7 +36,18 @@ const AllProductComponent = () => {
     justifyContent: "center",
   });
 
+  const [login, setLogin] = useState(false);
+  const [user, setUser] = useState(undefined);
+
   const [products, setProducts] = useState([
+    {
+      product_id: "",
+      product_name: "",
+      product_desc: "",
+      product_image: "",
+    },
+  ]);
+  const [favoriteProduct, setFavoritePrduct] = useState([
     {
       product_id: "",
       product_name: "",
@@ -42,6 +57,11 @@ const AllProductComponent = () => {
   ]);
 
   useEffect(() => {
+    setLogin(isLoggedIn());
+    setUser(getCurrentUserDetail());
+  }, [login]);
+
+  useEffect(() => {
     loadAllProductData()
       .then((data) => {
         console.log(data);
@@ -49,52 +69,87 @@ const AllProductComponent = () => {
       })
       .catch((error) => {
         console.log(error);
+        // toast.error(error.response.data.message);
       });
   }, []);
 
-  const [login, setLogin] = useState(false);
-  const [user, setUser] = useState(undefined);
-
-  const [isFavorite, setIsFavorite] = useState(false);
-
   useEffect(() => {
-    setLogin(isLoggedIn());
-    setUser(getCurrentUserDetail());
-  }, [login]);
+    getAllFavoriteProductsByUser(user)
+      .then((data) => {
+        console.log(data);
+        setFavoritePrduct(data);
+      })
+      .catch((error) => {
+        console.log(error);
+        // toast.error(error.response.data.message);
+      });
+  }, []);
 
-  console.log(login);
-  console.log(user);
+  // console.log(products);
+  // console.log(favoriteProduct);
+  // console.log(favoriteProduct.product_id === products.product_id);
+  // const isFavoritehandler = async (productId) => {
+  //   // eslint-disable-next-line no-lone-blocks
+  //   {
+  //     login
+  //       ? await isProductFavoriteByProductId(user, productId).then((data) => {
+  //           return data;
+  //         })
+  //       : navigate("/login");
+  //   }
+  // };
+
+  // const isFavoritehandler = async (productId) => {
+  //   try {
+  //     const response = await isProductFavoriteByProductId(user, productId);
+  //     return response;
+  //   } catch (e) {
+  //     console.log(e);
+  //   }
+  // };
+
+  // console.log("handler");
+  // console.log(isFavoritehandler());
+
   const favoriteHandler = (productId) => {
-    console.log("clicked");
-    console.log(productId);
+    // console.log("clicked");
+    // console.log(productId);
     // eslint-disable-next-line no-lone-blocks
     {
       login
         ? addFavoriteProductByUser(user, productId)
             .then((data) => {
-              console.log("clicked");
-              console.log(data);
-              //  setFA(data);
+              // console.log("clicked");
+              // console.log(data);
+              // window.location.reload();
+               toast.success("product added to favorite!!");
             })
             .catch((error) => {
               console.log(error);
+              toast.error(error.response.data.message);
             })
         : navigate("/login");
     }
   };
 
-  const unFavoriteHandler = (productId) => {
-    console.log("un-clicked");
-    console.log(productId);
-    deleteFavoriteProductByUser(user, productId)
-      .then((data) => {
-        console.log(data);
-        //  setFA(data);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
+  // const unFavoriteHandler = (productId) => {
+  //   // console.log("un-clicked");
+  //   // console.log(productId);
+  //   // eslint-disable-next-line no-lone-blocks
+  //   {
+  //     login
+  //       ? deleteFavoriteProductByUser(user, productId)
+  //           .then((data) => {
+  //             // console.log(data);
+  //             // window.location.reload();
+  //           })
+  //           .catch((error) => {
+  //             console.log(error);
+  // toast.error(error.response.data.message);
+  //           })
+  //       : navigate("/login");
+  //   }
+  // };
 
   return (
     <Base>
@@ -115,19 +170,21 @@ const AllProductComponent = () => {
                   sx={{
                     background: "black",
                     color: "white",
-                    borderRadius: "0.5rem",
+                    borderRadius: "0.2rem",
                     border: "2px solid goldenrod",
+                    height: "23rem",
                   }}
                 >
                   <CardMedia
                     onClick={(e) => setOpenPhoto(true)}
                     component="img"
                     alt="green iguana"
-                    height="60%"
-                    image="https://picsum.photos/300/200"
-                    // image={product.product_image}
+                    height="55%"
+                    src={`data:image/jpeg;base64,${product.product_image}`}
                   />
+                  <Divider variant="middle" color="white" />
                   <CardContent>
+                    
                     <Typography gutterBottom variant="h6" component="div">
                       {product.product_name}-{product.product_id}
                       {/* Lizard */}
@@ -139,8 +196,14 @@ const AllProductComponent = () => {
                       Antarctica */}
                     </Typography>
                   </CardContent>
-                  <CardActions disableSpacing>
-                    {isFavorite ? (
+                  <CardActions disableSpacing sx={{ marginTop: "-1rem" }}>
+                    <Button
+                      size="large"
+                      onClick={() => favoriteHandler(product.product_id)}
+                    >
+                      <FavoriteIcon sx={{ color: "white" }} />
+                    </Button>
+                    {/* {isFavoritehandler(product.product_id) ? (
                       <Button
                         size="large"
                         onClick={() => unFavoriteHandler(product.product_id)}
@@ -154,7 +217,7 @@ const AllProductComponent = () => {
                       >
                         <FavoriteIcon sx={{ color: "white" }} />
                       </Button>
-                    )}
+                    )} */}
                     <ReactLink>
                       <Button size="large">
                         <ShareIcon />
@@ -164,7 +227,7 @@ const AllProductComponent = () => {
                 </Card>
               </Box>
 
-              <StyleModal
+              {/* <StyleModal
                 open={openPhoto}
                 onClose={(e) => setOpenPhoto(false)}
                 aria-labelledby="modal-modal-title"
@@ -190,9 +253,6 @@ const AllProductComponent = () => {
                   >
                     {product.product_id}
 
-                    {/* {product.product_id} */}
-                    {/* {name} */}
-                    {/* Text in a modal */}
                   </Typography>
                   <CardMedia
                     component="img"
@@ -202,7 +262,7 @@ const AllProductComponent = () => {
                     // image={product.product_image}
                   />
                 </Box>
-              </StyleModal>
+              </StyleModal> */}
             </Box>
           </>
         ))}

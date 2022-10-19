@@ -55,4 +55,12 @@ export const deleteFavoriteProductByUser = (userName, productId) => {
     .then((response) => response.data);
 };
 
+export const isProductFavoriteByProductId = (userName, productId) => {
+  const product_id = parseInt(productId);
+
+  return myAxios
+    .post(`/user/${userName}/${product_id}`)
+    .then((response) => response.data);
+};
+
 

@@ -9,7 +9,7 @@ const Banner = () => {
     <Box
       margin={2}
       marginTop={9}
-      borderRadius={1}
+      borderRadius={0.5}
       border={"2px solid goldenrod"}
     >
       <CardMedia
