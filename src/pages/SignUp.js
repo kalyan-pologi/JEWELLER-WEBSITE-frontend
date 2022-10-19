@@ -119,7 +119,7 @@ const SignUp = () => {
       user.user_email === "" ||
       user.user_password === ""
     ) {
-      toast.error("please ENter Valid Details");
+      toast.error("please Enter Valid Details");
       return;
     }
 

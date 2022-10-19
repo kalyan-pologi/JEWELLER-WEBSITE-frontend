@@ -61,6 +61,7 @@ const BaseCardComponent = () => {
                 height="65%"
                 // image="https://picsum.photos/300/200"
                 // src={category.category_image}
+               
                 src={`data:image/jpeg;base64,${category.category_image}`}
               />
               <Divider variant="middle" color="white" />

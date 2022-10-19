@@ -1,6 +1,6 @@
 import React from "react";
 import { Box, CardMedia } from "@mui/material";
-import image from '../images/img-2.jpg'
+import image from '../images/images.jpg'
 const Banner = () => {
   return (
     // <div  className="banner-container">
@@ -13,6 +13,7 @@ const Banner = () => {
       border={"2px solid goldenrod"}
     >
       <CardMedia
+        
         component="img"
         alt="green iguana"
         height="500px"

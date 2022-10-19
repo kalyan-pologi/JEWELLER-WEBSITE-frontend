@@ -142,9 +142,9 @@ const Login = () => {
               </Button>
             </Box>
             <Grid container>
-              <Grid item xs>
+              {/* <Grid item xs>
                 <ReactLink to={"/forgot-password"}>Forgot password?</ReactLink>
-              </Grid>
+              </Grid> */}
               <Grid item>
                 <ReactLink to={"/sign-up"}>
                   {"Don't have an account? Sign Up"}
